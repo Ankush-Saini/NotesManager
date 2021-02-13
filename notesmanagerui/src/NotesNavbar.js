@@ -1,5 +1,6 @@
 import React from "react";
 import Moment from "react-moment";
+import equal from "fast-deep-equal";
 class NotesNavbar extends React.Component {
   constructor(props) {
     super(props);
@@ -12,9 +13,9 @@ class NotesNavbar extends React.Component {
   }
 
   fetchNotesData() {
-    console.log(this.state.type);
+    this.setState({ type: this.props.noteType });
     let apiUrl = "http://localhost:7021/users/" + this.state.userId + "/notes/";
-    if (this.state.type == "D")
+    if (this.props.noteType == "D")
       apiUrl =
         "http://localhost:7021/users/" + this.state.userId + "/deleted-notes/";
 
@@ -32,6 +33,13 @@ class NotesNavbar extends React.Component {
   componentDidMount() {
     this.fetchNotesData();
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps === undefined) {
+      this.fetchNotesData();
+    } else if (!equal(this.props, prevProps)) {
+      this.fetchNotesData();
+    }
+  }
   render() {
     if (!this.state.isLoaded) {
       return <div>loading Notes...</div>;
@@ -47,7 +55,6 @@ class NotesNavbar extends React.Component {
               placeholder="Search notes"
               id="notes-rearch"
             />
-            {this.state.type}
           </div>
         </div>
 

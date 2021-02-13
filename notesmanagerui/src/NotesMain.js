@@ -13,12 +13,14 @@ class NotesMain extends React.Component {
     this.notesSelect = this.notesSelect.bind(this);
     this.deletedNotesSelect = this.deletedNotesSelect.bind(this);
   }
-  notesSelect() {
+  notesSelect(e) {
+    e.preventDefault();
     this.setState({
       noteType: "N",
     });
   }
-  deletedNotesSelect() {
+  deletedNotesSelect(e) {
+    e.preventDefault();
     this.setState({
       noteType: "D",
     });
@@ -50,20 +52,28 @@ class NotesMain extends React.Component {
               <button>Compose</button>
             </li>
             <li>
-              <a href="/notes/N" className="active" onClick={this.notesSelect}>
+              <a
+                href="#"
+                className={this.state.noteType == "N" ? "active" : null}
+                onClick={this.notesSelect}
+              >
                 Notes
               </a>
             </li>
             <li>
-              <a href="/notes/D" onClick={this.deletedNotesSelect}>
+              <a
+                href="#"
+                className={this.state.noteType == "D" ? "active" : null}
+                onClick={this.deletedNotesSelect}
+              >
                 Deleted Notes
               </a>
             </li>
-            <Router>
+            {/* <Router>
               <Switch>
                 <Route path="/notes/:noteType" component={NotesNavbar} />
               </Switch>
-            </Router>
+            </Router> */}
             <li>
               <a href="#">{this.props.match.params.userId}</a>
             </li>
