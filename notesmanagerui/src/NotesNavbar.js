@@ -9,9 +9,14 @@ class NotesNavbar extends React.Component {
       userId: props.userId,
       noteNavData: [],
       isLoaded: false,
+      noteId: null,
     };
   }
-
+  onNoteClick(noteId) {
+    console.log("->" + noteId);
+    this.props.onNoteClick(noteId);
+    this.setState({ noteId: noteId });
+  }
   fetchNotesData() {
     this.setState({ type: this.props.noteType });
     let apiUrl = "http://localhost:7021/users/" + this.state.userId + "/notes/";
@@ -61,21 +66,36 @@ class NotesNavbar extends React.Component {
         {this.state.noteNavData.map((singleUser) => {
           return (
             <div className="mail-list">
-              <div className="form-check">
-                <label className="form-check-label">
-                  <input type="checkbox" className="form-check-input" />
-                  <i className="input-helper"></i>
-                </label>
-              </div>
-              <div className="content">
-                <p className="message-text">{singleUser.title}</p>
-                <p className="sender-name">
-                  <Moment date={singleUser.creation_time} />
-                </p>
-              </div>
-              <div className="details">
-                <i className="mdi mdi-star-outline"></i>
-              </div>
+              <a
+                href="#"
+                id={singleUser.noteId}
+                className={
+                  this.state.noteId == singleUser.noteId
+                    ? "noteLinkActive"
+                    : null
+                }
+                onClick={(e) => this.onNoteClick(singleUser.noteId)}
+              >
+                <div className="form-check">
+                  <label className="form-check-label">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      value={singleUser.noteId}
+                    />
+                    <i className="input-helper"></i>
+                  </label>
+                </div>
+                <div className="content">
+                  <p className="message-text">{singleUser.title}</p>
+                  <p className="sender-name">
+                    <Moment date={singleUser.creation_time} />
+                  </p>
+                </div>
+                <div className="details">
+                  <i className="mdi mdi-star-outline"></i>
+                </div>
+              </a>
             </div>
           );
         })}

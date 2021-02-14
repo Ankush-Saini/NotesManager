@@ -2,6 +2,7 @@ import React from "react";
 import NotesNavbar from "./NotesNavbar";
 import profileavater from "./images/avatar7.png";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import NotesBody from "./NotesBody";
 class NotesMain extends React.Component {
   constructor(props) {
     super(props);
@@ -9,9 +10,11 @@ class NotesMain extends React.Component {
       userId: props.match.params.userId,
       userName: props.location.state.userName,
       noteType: "N",
+      noteId: null,
     };
     this.notesSelect = this.notesSelect.bind(this);
     this.deletedNotesSelect = this.deletedNotesSelect.bind(this);
+    this.handleNoteClick = this.handleNoteClick.bind(this);
   }
   notesSelect(e) {
     e.preventDefault();
@@ -24,7 +27,9 @@ class NotesMain extends React.Component {
     this.setState({
       noteType: "D",
     });
-    console.log("Delete" + this.state.noteType);
+  }
+  handleNoteClick(noteId) {
+    this.setState({ noteId: noteId });
   }
   render() {
     return (
@@ -49,7 +54,16 @@ class NotesMain extends React.Component {
           </div>
           <ul>
             <li>
-              <button>Compose</button>
+              <button
+                type="submit"
+                onClick={() =>
+                  this.props.history.push(
+                    "/users/" + this.props.match.params.userId + "/create-notes"
+                  )
+                }
+              >
+                Compose
+              </button>
             </li>
             <li>
               <a
@@ -92,9 +106,17 @@ class NotesMain extends React.Component {
             <NotesNavbar
               userId={this.state.userId}
               noteType={this.state.noteType}
+              onNoteClick={this.handleNoteClick}
             />
           </nav>
-          <article></article>
+          <article>
+            <NotesBody
+              userId={this.state.userId}
+              noteType={this.state.noteType}
+              noteId={this.state.noteId}
+              history={this.props.history}
+            />
+          </article>
         </section>
       </div>
     );

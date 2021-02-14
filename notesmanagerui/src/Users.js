@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Users extends React.Component {
   constructor(props) {
@@ -12,8 +12,6 @@ class Users extends React.Component {
   }
   loadUsers() {
     let apiUrl = "http://localhost:7021/users";
-    var data =
-      '[{"userId":20,"userName":"Ankush Saini"},{"userId":21,"userName":"Sudhakar G"}]';
 
     fetch(apiUrl, {
       headers: {
@@ -26,6 +24,7 @@ class Users extends React.Component {
         this.setState({ userData: Object.values(jsonData), isLoaded: true })
       );
   }
+
   swap() {
     var rndimg = new Array("note1.jpg", "note2.jpg", "note3.jpg", "note4.jpg");
     var numimages = rndimg.length;
@@ -54,7 +53,7 @@ class Users extends React.Component {
 
     return (
       <div id="user-container">
-        <ul>
+        <ul id="user-list">
           {this.state.userData.map((singleUser) => {
             return (
               <li>

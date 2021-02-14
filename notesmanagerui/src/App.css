@@ -22,7 +22,7 @@ aside {
   top: 70px;
   float: left;
   width: 16%;
-  height: 680px; /* only for demonstration, should be removed */
+  height: 100%; /* only for demonstration, should be removed */
   background: #ccc;
   padding-top: 20px;
 }
@@ -123,18 +123,24 @@ aside a {
   position: absolute;
   left: 16%;
   width: 84%;
+  height: 100%;
 }
 
+.notesNavbar {
+  height: 100%;
+}
+.mail-list-container {
+  width: 30%;
+}
 .mail-list-container a {
   text-decoration: none;
 }
 
 .mail-list-container .mail-list {
   border-bottom: 1px solid #e9e9e9;
-  display: flex;
+  display: block;
   flex-direction: row;
   padding: 10px 15px;
-  width: 30%;
 }
 
 .mail-list-container .mail-list:last-child {
@@ -151,6 +157,7 @@ aside a {
   width: 83%;
   padding-left: 0;
   padding-right: 0;
+  color: #000000;
 }
 
 .mail-list-container .mail-list .content .sender-name {
@@ -197,5 +204,18 @@ aside a {
 .active {
   display: block;
   background-color: darkgrey;
+  border-radius: 3px;
+}
+
+article {
+  position: absolute;
+  top: 11px;
+  left: 33%;
+}
+
+.noteLinkActive {
+  display: block;
+  background-color: #f2f2f2;
+
   border-radius: 3px;
 }
